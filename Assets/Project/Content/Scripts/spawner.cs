@@ -7,15 +7,15 @@ public class spawner : MonoBehaviour
 {
     public Transform spawnPos;
     public GameObject spawnee;
-    public Transform posAnchor;
+    public GameObject posAnchor;
     public GameObject Anchor;
-    
+    GameObject schild;
+
 
     public void spawnObject()
     {
-        Instantiate(spawnee, spawnPos.position, spawnPos.rotation);  
-        Anchor.transform.position = posAnchor.position;
-
+        schild = Instantiate(spawnee, spawnPos.position, spawnPos.rotation);
+        schild.GetComponent<Microsoft.MixedReality.Toolkit.UI.ToolTipConnector>().Target = posAnchor;
     }
 
     // Update is called once per frame
