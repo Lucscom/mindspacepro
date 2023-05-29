@@ -5,19 +5,18 @@ using UnityEngine;
 
 public class spawner : MonoBehaviour
 {
-    public Transform spawnPos;
     public GameObject spawnee;
-    public GameObject posAnchor;
-    public GameObject Anchor;
-    GameObject schild;
-
+    public Transform spawnPos;
+    private GameObject newObject; 
+    
 
     public void spawnObject()
-    {
-        schild = Instantiate(spawnee, spawnPos.position, spawnPos.rotation);
-        schild.GetComponent<Microsoft.MixedReality.Toolkit.UI.ToolTipConnector>().Target = posAnchor;
+    {   
+        newObject = Instantiate(spawnee, spawnPos.position, spawnPos.rotation);
+        newObject.GetComponent<Microsoft.MixedReality.Toolkit.UI.ToolTip>().ShowConnector = false;
+        newObject.SetActive(true);
+        
     }
-
     // Update is called once per frame
 
 }
