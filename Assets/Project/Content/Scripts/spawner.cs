@@ -7,6 +7,7 @@ public class spawner : MonoBehaviour
 {
     public GameObject spawnee;
     public Transform spawnPos;
+    public GameObject tipBackground;
     private GameObject newObject; 
     
 
