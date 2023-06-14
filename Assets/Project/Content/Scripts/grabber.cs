@@ -3,42 +3,87 @@ using System.Collections.Generic;
 using UnityEngine;
 using Microsoft.MixedReality.Toolkit.UI;
 
+/// <summary>
+/// This script is used to controll the grabber sphere on the ToolTip.
+/// </summary>
 public class grabber : MonoBehaviour
 {   
+    /// <summary>
+    /// The toolTip is the ToolTip that is currently connected to the grabber.
+    /// </summary>
     public GameObject toolTip;
-    public GameObject parentToolTip;
+
+    /// <summary>
+    /// The sceneHandler is the GameObject that contains the connection script and is used to connect the ToolTips.
+    /// </summary>
     public GameObject sceneHandler;
-    public GameObject targetObject;
-    public bool isConnected;
     
-
-
+    /// <summary>
+    /// The line is the line that is drawn between the grabber and the ToolTip.
+    /// </summary>
     public LineRenderer line;
+
+    /// <summary>
+    /// showLIne is used to determine if the line should be drawn or not.
+    /// </summary>
     private bool showLine;
 
     private void Start()
     {
-        GetComponent<Renderer>().transform.position = toolTip.GetComponent<Microsoft.MixedReality.Toolkit.UI.ToolTip>().AttachPointPosition;
+        // Set the line to the correct width and disable it.
         showLine = false;
-        isConnected = false;
-        //line.startColor = Color.white;
-        //line.endColor = Color.white;
         line.startWidth = 0.003f;
         line.endWidth = 0.003f;
     }
-    
+
+    /// <summary>
+    /// This function is used to reset the grabber to the ToolTip.
+    /// </summary>
     public void resetGrabber()
     {
         GetComponent<Renderer>().transform.position = toolTip.GetComponent<Microsoft.MixedReality.Toolkit.UI.ToolTip>().AttachPointPosition;
+        GetComponent<Renderer>().material.SetColor("_Color", Color.white);
         showLine = false;
     }
 
+    /// <summary>
+    /// This function is used to start the grabber and show the line.
+    /// </summary>
     public void startGrabber()
     {
         showLine = true;
-        sceneHandler.GetComponent<connection>().parentToolTip = toolTip;
     }
 
+    /// <summary>
+    /// This function is used to detect the onTriggerEnter event and start the connection mode and transmit the ToolTip and the collider to the sceneHandler.
+    /// </summary>
+    private void OnTriggerEnter(Collider other) {
+        if(other.gameObject != toolTip && other.gameObject.GetComponent<Microsoft.MixedReality.Toolkit.UI.ToolTip>() != null && showLine)
+        {
+            sceneHandler.GetComponent<connectHandler>().parentToolTip = toolTip;
+            sceneHandler.GetComponent<connectHandler>().toolTip = other.gameObject;
+            sceneHandler.GetComponent<connectHandler>().connectionMode = true;
+            GetComponent<Renderer>().material.SetColor("_Color", Color.green);
+        }
+
+    }
+
+    /// <summary>
+    /// This function is used to detect the onTriggerExit event and stop the connection mode and transmit null to the sceneHandler.
+    /// </summary>
+    private void OnTriggerExit(Collider other) {
+        if(showLine){
+            sceneHandler.GetComponent<connectHandler>().parentToolTip = null;
+            sceneHandler.GetComponent<connectHandler>().toolTip = null;
+            sceneHandler.GetComponent<connectHandler>().connectionMode = false;
+            GetComponent<Renderer>().material.SetColor("_Color", Color.white);
+        }
+
+    }
+
+    /// <summary>
+    /// This function is used to update the line and the position of the grabber.
+    /// </summary>
     void Update()
     {
         if(showLine){
@@ -50,18 +95,11 @@ public class grabber : MonoBehaviour
         }
         else{
             line.enabled = false;
-            if(toolTip.GetComponent<Microsoft.MixedReality.Toolkit.UI.ToolTip>().LocalAttachPointPositions != null)
+            if(toolTip.GetComponent<Microsoft.MixedReality.Toolkit.UI.ToolTip>().LocalAttachPointPositions != null && toolTip.GetComponent<Microsoft.MixedReality.Toolkit.UI.ToolTip>().LocalAttachPointPositions.Length > 1)
             {
                 GetComponent<Renderer>().transform.position = toolTip.GetComponent<Microsoft.MixedReality.Toolkit.UI.ToolTip>().ContentParentTransform.TransformPoint(toolTip.GetComponent<Microsoft.MixedReality.Toolkit.UI.ToolTip>().LocalAttachPointPositions[1]);
-            }
-            
+            }  
         }
-        if(isConnected){
-            Vector3 positionParent = ToolTipUtility.FindClosestAttachPointToAnchor(toolTip.transform, parentToolTip.GetComponent<Microsoft.MixedReality.Toolkit.UI.ToolTip>().ContentParentTransform, parentToolTip.GetComponent<Microsoft.MixedReality.Toolkit.UI.ToolTip>().LocalAttachPointPositions, toolTip.GetComponent<Microsoft.MixedReality.Toolkit.UI.ToolTip>().PivotType);
-            targetObject.transform.position = parentToolTip.GetComponent<Microsoft.MixedReality.Toolkit.UI.ToolTip>().ContentParentTransform.TransformPoint(positionParent);
-            toolTip.GetComponent<Microsoft.MixedReality.Toolkit.UI.ToolTipConnector>().Target = targetObject;
-        }
-
     }
 
 }
