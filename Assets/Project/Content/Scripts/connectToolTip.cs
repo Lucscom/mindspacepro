@@ -28,10 +28,14 @@ public class connectToolTip : MonoBehaviour
     /// </summary>
     public bool isConnected;
 
+    public List<GameObject> childToolTips;
+
 
     void Start()
     {
         isConnected = false;
+
+        childToolTips = new List<GameObject>();
     }
 
     /// <summary>
@@ -39,10 +43,14 @@ public class connectToolTip : MonoBehaviour
     /// </summary>
     void Update()
     {
+        // if the ToolTip is connected to another ToolTip, the ToolTipConnector is updated
         if(isConnected){
             Vector3 positionParent = ToolTipUtility.FindClosestAttachPointToAnchor(toolTip.transform, parentToolTip.GetComponent<Microsoft.MixedReality.Toolkit.UI.ToolTip>().ContentParentTransform, parentToolTip.GetComponent<Microsoft.MixedReality.Toolkit.UI.ToolTip>().LocalAttachPointPositions, toolTip.GetComponent<Microsoft.MixedReality.Toolkit.UI.ToolTip>().PivotType);
             targetObject.transform.position = parentToolTip.GetComponent<Microsoft.MixedReality.Toolkit.UI.ToolTip>().ContentParentTransform.TransformPoint(positionParent);
             toolTip.GetComponent<Microsoft.MixedReality.Toolkit.UI.ToolTipConnector>().Target = targetObject;
+        }
+        else{
+            toolTip.GetComponent<Microsoft.MixedReality.Toolkit.UI.ToolTipConnector>().Target = null;
         }
         
     }

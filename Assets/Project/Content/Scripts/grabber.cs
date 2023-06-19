@@ -58,13 +58,16 @@ public class grabber : MonoBehaviour
     /// This function is used to detect the onTriggerEnter event and start the connection mode and transmit the ToolTip and the collider to the sceneHandler.
     /// </summary>
     private void OnTriggerEnter(Collider other) {
-        if(other.gameObject != toolTip && other.gameObject.GetComponent<Microsoft.MixedReality.Toolkit.UI.ToolTip>() != null && showLine)
+
+
+        if(other.gameObject != toolTip && other.GetComponent<Microsoft.MixedReality.Toolkit.UI.ToolTip>() != null && showLine)
         {
             sceneHandler.GetComponent<connectHandler>().parentToolTip = toolTip;
             sceneHandler.GetComponent<connectHandler>().toolTip = other.gameObject;
             sceneHandler.GetComponent<connectHandler>().connectionMode = true;
             GetComponent<Renderer>().material.SetColor("_Color", Color.green);
         }
+        
 
     }
 

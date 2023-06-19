@@ -38,9 +38,10 @@ public class connectHandler : MonoBehaviour
             toolTip.GetComponent<Microsoft.MixedReality.Toolkit.UI.ToolTip>().ShowConnector = true; 
             toolTip.GetComponent<connectToolTip>().parentToolTip = parentToolTip;
             toolTip.GetComponent<connectToolTip>().isConnected = true;
+
+            parentToolTip.GetComponent<connectToolTip>().childToolTips.Add(toolTip);
+
             connectionMode = false;
-            toolTip = null;
-            parentToolTip = null;
         }
     }
     

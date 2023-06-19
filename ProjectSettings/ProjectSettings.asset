@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: DefaultCompany
-  productName: AR_Vorlage_Blanko
+  productName: MindspacePRO
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -135,9 +135,7 @@ PlayerSettings:
     16:9: 1
     Others: 1
   bundleVersion: 0.1
-  preloadedAssets:
-  - {fileID: -8729749372664973239, guid: 38e1561018da46b4ca5e6466f7d34d57, type: 2}
-  - {fileID: -2383261437071058506, guid: 2775d257a6b535246928ae08eb4d7fca, type: 2}
+  preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -156,7 +154,8 @@ PlayerSettings:
   resetResolutionOnWindowResize: 0
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
-  applicationIdentifier: {}
+  applicationIdentifier:
+    Standalone: com.DefaultCompany.AR-Vorlage-Blanko
   buildNumber:
     Standalone: 0
     iPhone: 0
@@ -649,7 +648,7 @@ PlayerSettings:
   metroCertificateNotAfter: 80ab3b19b57fda01
   metroApplicationDescription: Template_3D
   wsaImages: {}
-  metroTileShortName: AR_Vorlage_Blanko
+  metroTileShortName: Mindspacepro
   metroTileShowName: 0
   metroMediumTileShowName: 0
   metroLargeTileShowName: 0
