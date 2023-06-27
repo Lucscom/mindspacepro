@@ -44,6 +44,10 @@ public class destroyHandler : MonoBehaviour
                 childToolTip.GetComponent<connectToolTip>().isConnected = false;
                 childToolTip.GetComponent<Microsoft.MixedReality.Toolkit.UI.ToolTip>().ShowConnector = false;
             }
+
+            if(toolTip.GetComponent<connectToolTip>().parentToolTip != null){
+                toolTip.GetComponent<connectToolTip>().parentToolTip.GetComponent<connectToolTip>().childToolTips.Remove(toolTip);
+            }
             sceneHandler.GetComponent<sceneHandler>().toolTipList.Remove(toolTip);
 
             Destroy(toolTip);
